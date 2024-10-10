@@ -12,12 +12,12 @@ import java.util.Random;
  *     <li>{@code [row][col][1]} holds the solution of the puzzle.</li>
  * </ul>
  */
-public class MatrixGenerator {
+class MatrixGenerator {
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
 
-    public static int[][][] initGameBoard(SudokuLevel level) {
+     static int[][][] initGameBoard(SudokuLevel level) {
         return generateSudokuMatrix(level);
     }
 
@@ -49,7 +49,6 @@ public class MatrixGenerator {
         for (int i = 0; i < GRID_SIZE; i++) {
             randomNb1 = random.nextInt(GRID_SIZE)+1;
             randomNb2 = random.nextInt(GRID_SIZE)+1;
-            System.out.println(randomNb1 + " & " + randomNb2);
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
                     if      (matrix[row][col] == randomNb1)     matrix[row][col] = randomNb2;

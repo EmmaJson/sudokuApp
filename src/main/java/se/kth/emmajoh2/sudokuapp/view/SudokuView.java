@@ -70,46 +70,45 @@ public class  SudokuView extends BorderPane {
     }
 
     /**
-     * Creates a set of number buttons (1-9) and a clear button, adding them to the right side of the UI.
+     * Creates a vertical box (VBox) containing a set of number buttons (1-9) and a clear button ('C').
      * <p>
-     * Each button's user data is set to the number it represents, with the clear button assigned a value of 0.
-     * The buttons are connected to event handlers that call the appropriate controller methods.
+     * Each button's label represents a number (or 'C' for clearing). When clicked, the button's label
+     * is used to determine the value to send to the controller. The clear button ('C') sets the value
+     * to 0, while the number buttons set their corresponding numeric values.
+     * </p>
+     * <p>
+     * The buttons are displayed vertically in the VBox. Each button is linked to a single event handler,
+     * which extracts the button's label, processes it, and calls the corresponding method in the controller.
      * </p>
      *
-     * @param controller The {@link Controller} responsible for handling button actions.
-     * @return A {@link VBox} containing the number buttons.
+     * @param controller The {@link Controller} responsible for handling the button actions.
+     * @return A {@link VBox} containing the number buttons and the clear button.
      */
     private VBox createButtons(Controller controller) {
         VBox v2 = new VBox();
         v2.setAlignment(Pos.CENTER);
-
-        // List of button labels, could be changed to anything you'd like
         String[] buttonLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "C"};
-
-        // Create buttons dynamically
+        EventHandler<ActionEvent> buttonEventHandler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Button sourceButton = (Button) actionEvent.getSource();
+                String buttonText = sourceButton.getText();
+                if (buttonText.equals("C")) {
+                    pressedButtonNumber = 0;
+                } else {
+                    pressedButtonNumber = Integer.parseInt(buttonText);
+                }
+                controller.onNumberButton(pressedButtonNumber);
+            }
+        };
         for (String label : buttonLabels) {
             Button button = new Button(label);
-
-            // Set user data for number buttons, 'C' for clear can be handled separately
-            if (!label.equals("C")) {
-                button.setUserData(Integer.parseInt(label)); // Set the number as user data
-            } else {
+            if (label.equals("C")) {
                 button.setUserData(0); // For the clear button
+            } else {
+                button.setUserData(Integer.parseInt(label)); // For number buttons
             }
-
-            // Attach the event handler to each button
-            button.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    Button sourceButton = (Button) actionEvent.getSource();
-                    Object userData = sourceButton.getUserData();
-
-                    if (userData instanceof Integer) {
-                        pressedButtonNumber = (Integer) userData;
-                        controller.onNumberButton(pressedButtonNumber);
-                    }
-                }
-            });
+            button.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
             v2.getChildren().add(button);
         }
         v2.setPadding(new Insets(10));

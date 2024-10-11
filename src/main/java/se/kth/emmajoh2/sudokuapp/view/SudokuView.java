@@ -224,7 +224,7 @@ public class  SudokuView extends BorderPane {
                 for (int col = 0; col < GRID_SIZE; col++) {
                     if (event.getSource() == numberTiles[row][col]) {
                         System.out.println("Tile Pressed: " + row + col);
-                        controller.onTileSelectedOrSomeSuch(row, col, pressedButtonNumber); //TODO: implement later;
+                        controller.onTileSelectedOrSomeSuch(row, col, pressedButtonNumber);
                     }
                 }
             }

@@ -7,6 +7,8 @@
 - [X] Lägg in en matris som håller koll på lösnings rutor som fanns där när matrsien genererades.
 - [X] En metod för att lägga in siffror i rutorna.
 - [X] En metod som kollar ifall de ifyllda rutorna är lösta.
+- [X] Datamedlem som representerar en tryckt knapp, samt en setmetod till denna.
+
 
 ### View
 - [X] Lägga till knappar och menyer till view.

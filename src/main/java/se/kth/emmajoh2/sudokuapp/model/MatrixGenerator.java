@@ -18,17 +18,6 @@ public class MatrixGenerator {
     public static final int SECTION_SIZE = 3;
 
     /**
-     * Initializes the game board based on the specified difficulty level.
-     *
-     * @param level The difficulty level of the Sudoku puzzle (EASY, MEDIUM, HARD).
-     * @return A 3-dimensional array where {@code [row][col][0]} holds the initial values (0 for empty cells),
-     *         and {@code [row][col][1]} holds the solution.
-     */
-     static int[][][] initGameBoard(SudokuLevel level) {
-        return generateSudokuMatrix(level);
-    }
-
-    /**
      * Generates a Sudoku matrix with an initial setup and solution, based on the specified difficulty level.
      * <p>
      * The puzzle starts with a fully generated and randomized valid Sudoku grid, and then values are removed

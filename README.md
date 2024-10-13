@@ -1,6 +1,4 @@
-# sudokuApp
-
-## Todo </b>
+# Todo
 
 ### Model
 - [X] Metoder för att generara en spelplan med tillhörande lösning.

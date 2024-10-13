@@ -111,4 +111,9 @@ public class SelectedTile implements Serializable {
         if (number >= 0 && number<= GRID_SIZE) return true; //om 0 clear
         else return false;
     }
+
+    @Override
+    public String toString() {
+        return "" +currentNumber;
+    }
 }

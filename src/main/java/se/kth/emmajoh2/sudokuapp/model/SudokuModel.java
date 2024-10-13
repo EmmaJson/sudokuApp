@@ -2,6 +2,7 @@ package se.kth.emmajoh2.sudokuapp.model;
 
 import java.util.Random;
 import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.GRID_SIZE;
+import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.SECTION_SIZE;
 
 /**
  * The {@code SudokuModel} class represents the underlying data structure for a Sudoku puzzle.
@@ -130,6 +131,7 @@ public class SudokuModel {
             randCol = random.nextInt(GRID_SIZE);
             if ((!sudokuBoard[randRow][randCol].isCorrectlyPlaced())) {
                 sudokuBoard[randRow][randCol].setTile(sudokuBoard[randRow][randCol].getCorrectTile());
+                // TODO: Debugging System.out.println("Row:" + randRow + ", Col:" + randCol);
                 return true;
             }
         }
@@ -140,7 +142,6 @@ public class SudokuModel {
      *
      * @return {@code true} if all tiles are correct, {@code false} otherwise.
      */
-
     public boolean allTilesCorrect() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
@@ -173,5 +174,58 @@ public class SudokuModel {
                 sudokuBoard[row][col].resetTile();
             }
         }
+    }
+
+    /**
+     * Generates a formatted string representation of the Sudoku board.
+     *
+     * This method iterates through each row and column of the `sudokuBoard` and
+     * constructs a string that visually represents the board. The board is divided
+     * into sections, and the method adds visual markers such as vertical bars ("|")
+     * between the sections and horizontal lines ("------------------------")
+     * after every section of rows. This helps to present the Sudoku board in a
+     * clean and readable format.
+     *
+     * Example output for a 9x9 Sudoku board:
+     * -------------------------
+     * | 4 8 0 | 0 0 3 | 7 0 9 |
+     * | 2 0 0 | 0 0 0 | 4 0 0 |
+     * | 0 0 0 | 0 8 0 | 0 0 3 |
+     * -------------------------
+     * | 8 0 2 | 5 0 0 | 0 0 0 |
+     * | 0 0 0 | 0 9 0 | 8 0 2 |
+     * | 0 0 0 | 0 1 2 | 0 0 7 |
+     * -------------------------
+     * | 1 0 0 | 3 0 0 | 9 0 0 |
+     * | 0 7 6 | 9 0 0 | 1 0 0 |
+     * | 0 0 8 | 1 0 0 | 3 7 6 |
+     * -------------------------
+     * @return A string that visually represents the Sudoku board, with section
+     *         dividers between every 3x3 block (or customizable depending on the
+     *         `GRID_SIZE` and `SECTION_SIZE`).
+     */
+    @Override
+    public String toString() {
+        StringBuilder info = new StringBuilder();
+        int rowCounter = 0, colCounter = 0;
+        info.append("-------------------------").append('\n');
+        for (int row = 0; row < GRID_SIZE; row++) {
+            info.append("|");
+            rowCounter++;
+            for (int col = 0; col < GRID_SIZE; col++) {
+                colCounter++;
+                info.append(" ").append(sudokuBoard[row][col].toString());
+                if (colCounter == SECTION_SIZE) {
+                    info.append(" |");
+                    colCounter = 0;
+                }
+            }
+            info.append('\n');
+            if (rowCounter == SECTION_SIZE) {
+                info.append("-------------------------").append('\n');
+                rowCounter = 0;
+            }
+        }
+        return info.toString();
     }
 }

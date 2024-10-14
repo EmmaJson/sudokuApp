@@ -139,7 +139,7 @@ public class Controller {
     public void onSave() {
         File file = new File("sudoku.ser");
         try {
-            SudokuIO.serializeToFile(file, model.getSudokuBoard());
+            SudokuIO.serializeToFile(model.getSudokuBoard());
             view.alert("Save", "Game saved successfully!");
             System.out.println("Game saved successfully!");
         } catch (IOException e) {
@@ -159,7 +159,7 @@ public class Controller {
         File file = new File("sudoku.ser");
         try {
 
-            model.loadBoard(deserializeFromFile(file));
+            model.loadBoard(deserializeFromFile());
             view.updateBoard(model);
             view.alert("Load", "Game loaded successfully!");
             System.out.println("Game loaded successfully!");

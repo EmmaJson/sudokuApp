@@ -1,5 +1,8 @@
 package se.kth.emmajoh2.sudokuapp.model;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.*;
 
 import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.GRID_SIZE;
@@ -13,14 +16,19 @@ public class SudokuIO {
      * Serializes a 2D array of {@link SelectedTile} objects to the specified file.
      * This method writes the provided 2D array of {@code SelectedTile} objects to the given file,
      * so that it can be deserialized later. The serialized object is written in a binary format.
-     * @param file The file to which the {@code SelectedTile[][]} grid is to be serialized.
      * @param data The 2D array of {@code SelectedTile} objects to be serialized.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
-    public static void serializeToFile(File file, SelectedTile[][] data) throws IOException {
+    public static void serializeToFile(SelectedTile[][] data) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("SudokuFiles", "*.ser"));
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+
         ObjectOutputStream objectOutputStream = null;
         try {
-            FileOutputStream fout = new FileOutputStream(file);
+            FileOutputStream fout = new FileOutputStream(selectedFile);
             objectOutputStream = new ObjectOutputStream(fout);
             objectOutputStream.writeObject(data);
         }
@@ -38,12 +46,16 @@ public class SudokuIO {
      * deserialized {@code SelectedTile[][]} grid. The file is expected to contain a previously
      * serialized 2D array of {@code SelectedTile} objects.
      * </p>
-     * @param file The file from which the {@code SelectedTile[][]} grid is to be deserialized.
      * @return A 2D array of {@code SelectedTile} objects representing the deserialized Sudoku board.
      * @throws IOException If an I/O error occurs while reading from the file.
      * @throws ClassNotFoundException If the class of a serialized object cannot be found.
      */
-    public static SelectedTile[][] deserializeFromFile(File file) throws IOException, ClassNotFoundException {
+    public static SelectedTile[][] deserializeFromFile() throws IOException, ClassNotFoundException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Ser Files", "*.ser")
+        );
+        File file = fileChooser.showOpenDialog(null);
         ObjectInputStream objectInputStream = null;
         SelectedTile[][] loadTiles = new SelectedTile[GRID_SIZE][GRID_SIZE];
         try {

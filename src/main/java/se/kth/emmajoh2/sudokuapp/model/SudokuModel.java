@@ -171,6 +171,15 @@ public class SudokuModel {
         return true;
     }
 
+    public boolean gameOver() {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                if (sudokuBoard[row][col].getCurrentTileNb() == 0) return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Resets all non-initial tiles on the board, clearing the numbers entered by the player.
      */

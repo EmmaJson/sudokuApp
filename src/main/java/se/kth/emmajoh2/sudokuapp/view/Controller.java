@@ -41,10 +41,11 @@ public class Controller {
      */
     public void onTileSelectedOrSomeSuch(int row, int col) {
         System.out.println("Tile Pressed: " + row + col);
-        //model.addNumber(row, col, number);
         model.addNumber(row, col);
         view.updateBoard(model);
-        if (model.allTilesCorrect()) view.alert("Game over", "You solved the board");
+        if (model.gameOver()) {
+            if (model.allTilesCorrect()) view.alert("Game over", "You solved the board");
+        }
     }
 
     /**

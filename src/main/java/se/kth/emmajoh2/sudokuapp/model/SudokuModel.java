@@ -171,6 +171,10 @@ public class SudokuModel {
         return true;
     }
 
+    /**
+     * Checks if numbers have been places on all tiles.
+     * @return {@code true} if all tiles have numbers, {@code false} otherwise.
+     */
     public boolean gameOver() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {

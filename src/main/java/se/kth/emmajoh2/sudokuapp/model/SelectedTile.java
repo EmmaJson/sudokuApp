@@ -39,7 +39,7 @@ public class SelectedTile implements Serializable {
      *
      * @return The current number entered by the player, or 0 if the tile is empty.
      */
-    int getTileNb() {
+    int getCurrentTileNb() {
         return currentNumber;
     }
 
@@ -48,7 +48,7 @@ public class SelectedTile implements Serializable {
      *
      * @return The correct solution for this tile.
      */
-    int getCorrectTile() {
+    int getSolutionTile() {
         return solution;
     }
 
@@ -92,7 +92,7 @@ public class SelectedTile implements Serializable {
      * @return {@code true} if the tile's number was successfully set, {@code false} if the tile is an initial tile.
      * @throws IllegalArgumentException If the provided number is invalid (not between 0 and the grid size).
      */
-    boolean setTile(int number) {
+    boolean setCurrentTile(int number) {
         if(!isSudokuNb(number)) throw new IllegalArgumentException();
         if (!isInitialTile()) {
             currentNumber = number;

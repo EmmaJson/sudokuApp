@@ -1,5 +1,6 @@
 package se.kth.emmajoh2.sudokuapp.view;
 
+import javafx.animation.FillTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,8 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 import se.kth.emmajoh2.sudokuapp.model.SudokuModel;
 
 import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.*;
@@ -24,9 +27,9 @@ import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.*;
  * </p>
  */
 public class  SudokuView extends BorderPane {
-    private final transient Label[][] numberTiles; // the tiles/squares to show in the ui grid
-    private final transient GridPane numberPane;
-    private final SudokuModel model;
+    private transient Label[][] numberTiles; // the tiles/squares to show in the ui grid
+    private transient GridPane numberPane;
+    private SudokuModel model;
     private transient MenuBar menuBar;
     private final Controller controller;
     private transient Button check;
@@ -65,7 +68,6 @@ public class  SudokuView extends BorderPane {
         hintAndClear.setSpacing(1);
         setLeft(hintAndClear);
 
-        Controller controller = new Controller(model,this);
         createButtons(controller);
         addEventHandlers(controller);
         createMenuBar(controller);
@@ -132,6 +134,8 @@ public class  SudokuView extends BorderPane {
         numberButtons.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
         numberButtons.setPadding(new Insets(10));
         numberButtons.setSpacing(1);
+        setStyle( "-fx-background-color: #ffffff;");
+
         return numberButtons;
     }
 
@@ -203,7 +207,7 @@ public class  SudokuView extends BorderPane {
         // create the root grid pane
         GridPane root = new GridPane();
         root.setStyle(
-                "-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: white;");
+                "-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: #caf5d3;");
 
         // create the 3*3 sections and add the number tiles
         for (int srow = 0; srow < SECTIONS_PER_ROW; srow++) {

@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import se.kth.emmajoh2.sudokuapp.model.SudokuModel;
 import se.kth.emmajoh2.sudokuapp.view.SudokuView;
 
-
 public class SudokuApp extends Application {
     @Override
     public void start(Stage stage) { //Stage == fönster

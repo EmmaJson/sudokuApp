@@ -6,16 +6,16 @@ public class TestApp {
     public static void main(String[] args) {
         System.out.println("initial board:");
         SudokuModel model = new SudokuModel();
-        System.out.println(model.toString());
+        System.out.println(model);
 
         /*System.out.println("change in row 1 and col 1, to: 5");
         model.addNumber(1,1,5);
-        System.out.println(model.toString());
+        System.out.println(model);
          */
 
         System.out.println("hint added");
         model.addhint();
-        System.out.println(model.toString());
+        System.out.println(model);
 
         if (model.allTilesCorrect()) {
             System.out.println("all tiles are correct");

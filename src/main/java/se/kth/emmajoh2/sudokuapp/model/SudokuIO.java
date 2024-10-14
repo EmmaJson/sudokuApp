@@ -1,8 +1,6 @@
 package se.kth.emmajoh2.sudokuapp.model;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.GRID_SIZE;
 
@@ -13,11 +11,8 @@ public class SudokuIO {
 
     /**
      * Serializes a 2D array of {@link SelectedTile} objects to the specified file.
-     * <p>
      * This method writes the provided 2D array of {@code SelectedTile} objects to the given file,
      * so that it can be deserialized later. The serialized object is written in a binary format.
-     * </p>
-     *
      * @param file The file to which the {@code SelectedTile[][]} grid is to be serialized.
      * @param data The 2D array of {@code SelectedTile} objects to be serialized.
      * @throws IOException If an I/O error occurs while writing to the file.
@@ -39,12 +34,10 @@ public class SudokuIO {
 
     /**
      * Deserializes a 2D array of {@link SelectedTile} objects from the specified file.
-     * <p>
      * This method reads the serialized object data from the given file and returns the
      * deserialized {@code SelectedTile[][]} grid. The file is expected to contain a previously
      * serialized 2D array of {@code SelectedTile} objects.
      * </p>
-     *
      * @param file The file from which the {@code SelectedTile[][]} grid is to be deserialized.
      * @return A 2D array of {@code SelectedTile} objects representing the deserialized Sudoku board.
      * @throws IOException If an I/O error occurs while reading from the file.

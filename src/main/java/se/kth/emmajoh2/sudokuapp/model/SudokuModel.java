@@ -95,7 +95,7 @@ public class SudokuModel {
      * @return A string representing the current number on the tile, or an empty string if the tile is empty.
      */
     public String getTile(int row, int col) {
-        int tempInt = sudokuBoard[row][col].getTileNb();
+        int tempInt = sudokuBoard[row][col].getCurrentTileNb();
         String s = new String();
         if (tempInt != 0) {
             s = String.valueOf(tempInt);
@@ -121,7 +121,7 @@ public class SudokuModel {
      * @param col The column of the tile.
      */
     public void addNumber(int row, int col) {
-        sudokuBoard[row][col].setTile(pressedButtonNumber);
+        sudokuBoard[row][col].setCurrentTile(pressedButtonNumber);
     }
 
     /**
@@ -136,7 +136,7 @@ public class SudokuModel {
             randRow = random.nextInt(GRID_SIZE);
             randCol = random.nextInt(GRID_SIZE);
             if ((!sudokuBoard[randRow][randCol].isCorrectlyPlaced())) {
-                sudokuBoard[randRow][randCol].setTile(sudokuBoard[randRow][randCol].getCorrectTile());
+                sudokuBoard[randRow][randCol].setCurrentTile(sudokuBoard[randRow][randCol].getSolutionTile());
                 // TODO: Debugging System.out.println("Row:" + randRow + ", Col:" + randCol);
                 return true;
             }
@@ -165,7 +165,7 @@ public class SudokuModel {
     public boolean placedTilesCorrect() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
-                if (!sudokuBoard[row][col].isCorrectlyPlaced() && (sudokuBoard[row][col].getTileNb() != 0)) return false;
+                if (!sudokuBoard[row][col].isCorrectlyPlaced() && (sudokuBoard[row][col].getCurrentTileNb() != 0)) return false;
             }
         }
         return true;

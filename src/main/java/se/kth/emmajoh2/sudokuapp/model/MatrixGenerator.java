@@ -34,13 +34,13 @@ public class MatrixGenerator {
     static int[][][] generateSudokuMatrix(SudokuLevel level) {
         switch (level) {
             case EASY:
-                return setLevel(generateRandomizedBoard(), 40);
+                return setLevel(randomizeBoard(), 40);
             case MEDIUM:
-                return setLevel(generateRandomizedBoard(), 30);
+                return setLevel(randomizeBoard(), 30);
             case HARD:
-                return setLevel(generateRandomizedBoard(), 17);
+                return setLevel(randomizeBoard(), 17);
             default:
-                return setLevel(generateRandomizedBoard(), 30);
+                return setLevel(randomizeBoard(), 30);
         }
     }
 
@@ -53,7 +53,7 @@ public class MatrixGenerator {
      *
      * @return A 3-dimensional array representing a fully populated and valid Sudoku grid.
      */
-    private static int[][][] generateRandomizedBoard() {
+    private static int[][][] randomizeBoard() {
         Random random = new Random();
         int[][] matrix = generateInitBoard();
         int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][3];
@@ -106,13 +106,13 @@ public class MatrixGenerator {
      * </p>
      *
      * @param matrix The complete Sudoku matrix to modify.
-     * @param ch The number of cells to leave filled, defining the difficulty.
+     * @param levelChoice The number of cells to leave filled, defining the difficulty.
      * @return A 3-dimensional array representing the Sudoku board with empty cells (0) according to the difficulty level.
      */
-    private static int[][][] setLevel(int[][][] matrix, int ch) {
+    private static int[][][] setLevel(int[][][] matrix, int levelChoice) {
         Random random = new Random();
         int randomRow, randomCol;
-        for (int i = GRID_SIZE * GRID_SIZE; i > ch; i--) {
+        for (int i = GRID_SIZE * GRID_SIZE; i > levelChoice; i--) {
             randomRow = random.nextInt(GRID_SIZE);
             randomCol = random.nextInt(GRID_SIZE);
             if (matrix[randomRow][randomCol][0] != 0) {

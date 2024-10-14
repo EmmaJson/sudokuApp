@@ -24,20 +24,16 @@ import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.*;
  * </p>
  */
 public class  SudokuView extends BorderPane {
-    private transient Label[][] numberTiles; // the tiles/squares to show in the ui grid
-    private transient GridPane numberPane;
-    private SudokuModel model;
+    private final transient Label[][] numberTiles; // the tiles/squares to show in the ui grid
+    private final transient GridPane numberPane;
+    private final SudokuModel model;
     private transient MenuBar menuBar;
-    private Controller controller;
+    private final Controller controller;
     private transient Button check;
     private transient Button hint;
-    private int pressedButtonNumber;
 
     /**
      * Constructs a new {@code SudokuView} to display the Sudoku game.
-     * <p>
-     * The view initializes the grid of tiles, buttons, and menus, and connects them to the controller.
-     * </p>
      *
      * @param model The {@link SudokuModel} representing the game's current state.
      */
@@ -45,10 +41,16 @@ public class  SudokuView extends BorderPane {
         super();
         this.model = model;
         controller = new Controller(model,this);
-
         numberTiles = new Label[GRID_SIZE][GRID_SIZE];
         initNumberTiles();
         numberPane = makeNumberPane();
+        initView();
+    }
+
+    /**
+     * The view initializes the grid of tiles, buttons, and menus, and connects them to the controller.
+     */
+    private void initView() {
         this.setPadding(new Insets(10));
 
         this.setCenter(numberPane);
@@ -85,35 +87,52 @@ public class  SudokuView extends BorderPane {
      * @return A {@link VBox} containing the number buttons and the clear button.
      */
     private VBox createButtons(Controller controller) {
-        VBox v2 = new VBox();
-        v2.setAlignment(Pos.CENTER);
-        String[] buttonLabels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "C"};
+        VBox numberButtons = new VBox();
+        numberButtons.setAlignment(Pos.CENTER);
         EventHandler<ActionEvent> buttonEventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Button sourceButton = (Button) actionEvent.getSource();
                 String buttonText = sourceButton.getText();
-                if (buttonText.equals("C")) {
-                    pressedButtonNumber = 0;
-                } else {
-                    pressedButtonNumber = Integer.parseInt(buttonText);
+                switch (buttonText) {
+                    case "1" : controller.onNumberButton(1); break;
+                    case "2" : controller.onNumberButton(2); break;
+                    case "3" : controller.onNumberButton(3); break;
+                    case "4" : controller.onNumberButton(4); break;
+                    case "5" : controller.onNumberButton(5); break;
+                    case "6" : controller.onNumberButton(6); break;
+                    case "7" : controller.onNumberButton(7); break;
+                    case "8" : controller.onNumberButton(8); break;
+                    case "9" : controller.onNumberButton(9); break;
+                    case "C" : controller.onNumberButton(0); break;
                 }
-                controller.onNumberButton(pressedButtonNumber);
             }
         };
-        for (String label : buttonLabels) {
-            Button button = new Button(label);
-            if (label.equals("C")) {
-                button.setUserData(0); // For the clear button
-            } else {
-                button.setUserData(Integer.parseInt(label)); // For number buttons
-            }
-            button.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
-            v2.getChildren().add(button);
-        }
-        v2.setPadding(new Insets(10));
-        v2.setSpacing(1);
-        return v2;
+        Button one      = new Button("1");
+        Button two      = new Button("2");
+        Button three    = new Button("3");
+        Button four     = new Button("4");
+        Button five     = new Button("5");
+        Button six      = new Button("6");
+        Button seven    = new Button("7");
+        Button eight    = new Button("8");
+        Button nine     = new Button("9");
+        Button clear    = new Button("C");
+
+        one.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        two.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        three.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        four.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        five.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        six.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        seven.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        eight.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        nine.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        clear.addEventHandler(ActionEvent.ACTION, buttonEventHandler);
+        numberButtons.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
+        numberButtons.setPadding(new Insets(10));
+        numberButtons.setSpacing(1);
+        return numberButtons;
     }
 
     /**
@@ -223,8 +242,7 @@ public class  SudokuView extends BorderPane {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
                     if (event.getSource() == numberTiles[row][col]) {
-                        System.out.println("Tile Pressed: " + row + col);
-                        controller.onTileSelectedOrSomeSuch(row, col, pressedButtonNumber);
+                        controller.onTileSelectedOrSomeSuch(row, col);
                     }
                 }
             }

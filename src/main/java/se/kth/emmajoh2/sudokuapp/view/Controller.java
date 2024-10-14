@@ -18,8 +18,8 @@ import static se.kth.emmajoh2.sudokuapp.model.SudokuIO.deserializeFromFile;
  * </p>
  */
 public class Controller {
-    private SudokuModel model;
-    private SudokuView view;
+    private final SudokuModel model;
+    private final SudokuView view;
 
     /**
      * Constructs a {@code Controller} to manage communication between the model and view.
@@ -34,34 +34,27 @@ public class Controller {
 
     /**
      * Handles when a tile is selected and a number is input by the user.
-     * <p>
      * Updates the model with the selected number for the given row and column, and refreshes the view.
      * If all tiles are correct after the input, it displays a "Game over" message.
-     * </p>
-     *
      * @param row The row of the selected tile.
      * @param col The column of the selected tile.
-     * @param number The number entered by the user for the selected tile.
      */
-    public void onTileSelectedOrSomeSuch(int row, int col, int number) {
-        System.out.println("CLICKED" +row + col);
-        model.addNumber(row, col, number);
+    public void onTileSelectedOrSomeSuch(int row, int col) {
+        //System.out.println("Tile Pressed: " + row + col);
+        //model.addNumber(row, col, number);
+        model.addNumber(row, col);
         view.updateBoard();
         if (model.allTilesCorrect()) view.alert("Game over", "You solved the board");
     }
 
     /**
      * Handles the event when a number button is pressed.
-     * <p>
      * This method is a placeholder to handle logic when number buttons are pressed.
-     * Currently, it prints the button number to the console.
-     * </p>
-     *
      * @param number The number entered by pressing a button.
      */
     public void onNumberButton(int number) {
-        System.out.println("Button pressed: " + number);
-        // TODO: Handle the logic for when a number button is pressed
+        //System.out.println("Button pressed: " + number);
+        model.setPressedButtonNumber(number);
     }
 
     /**

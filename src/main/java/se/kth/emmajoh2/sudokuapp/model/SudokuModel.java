@@ -12,14 +12,17 @@ import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.SECTION_SIZE;
  * 2D array of {@link SelectedTile} objects.
  */
 public class SudokuModel {
-    private SelectedTile[][] sudokuBoard;
+    private final SelectedTile[][] sudokuBoard;
     private SudokuLevel level;
+    private int pressedButtonNumber;
+
 
     /**
      * Constructs a new {@code SudokuModel} with a default difficulty level of {@code MEDIUM}.
      * Initializes the game board by generating a new Sudoku puzzle based on the default level.
      */
     public SudokuModel() {
+        this.pressedButtonNumber = 0;
         this.sudokuBoard = new SelectedTile[GRID_SIZE][GRID_SIZE];
         this.level = SudokuLevel.MEDIUM;
         initGame(level);
@@ -36,6 +39,10 @@ public class SudokuModel {
                 sudokuBoard[row][col] = loadedTiles[row][col];
             }
         }
+    }
+
+    public void setPressedButtonNumber(int pressedButtonNumber) {
+        this.pressedButtonNumber = pressedButtonNumber;
     }
 
     /**
@@ -112,10 +119,9 @@ public class SudokuModel {
      *
      * @param row The row of the tile.
      * @param col The column of the tile.
-     * @param numberToAdd The number to be added to the tile.
      */
-    public void addNumber(int row, int col, int numberToAdd) {
-        sudokuBoard[row][col].setTile(numberToAdd);
+    public void addNumber(int row, int col) {
+        sudokuBoard[row][col].setTile(pressedButtonNumber);
     }
 
     /**
@@ -178,14 +184,13 @@ public class SudokuModel {
 
     /**
      * Generates a formatted string representation of the Sudoku board.
-     *
+     * <p>
      * This method iterates through each row and column of the `sudokuBoard` and
      * constructs a string that visually represents the board. The board is divided
      * into sections, and the method adds visual markers such as vertical bars ("|")
      * between the sections and horizontal lines ("------------------------")
      * after every section of rows. This helps to present the Sudoku board in a
      * clean and readable format.
-     *
      * Example output for a 9x9 Sudoku board:
      * -------------------------
      * | 4 8 0 | 0 0 3 | 7 0 9 |

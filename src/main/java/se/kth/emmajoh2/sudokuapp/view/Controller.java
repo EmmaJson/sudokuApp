@@ -40,10 +40,10 @@ public class Controller {
      * @param col The column of the selected tile.
      */
     public void onTileSelectedOrSomeSuch(int row, int col) {
-        //System.out.println("Tile Pressed: " + row + col);
+        System.out.println("Tile Pressed: " + row + col);
         //model.addNumber(row, col, number);
         model.addNumber(row, col);
-        view.updateBoard();
+        view.updateBoard(model);
         if (model.allTilesCorrect()) view.alert("Game over", "You solved the board");
     }
 
@@ -79,7 +79,7 @@ public class Controller {
     public void onHint() {
         if (model.addhint()) {
             view.alert("Hint", "A hint has been placed");
-            view.updateBoard();
+            view.updateBoard(model);
         }
         if (model.allTilesCorrect()) view.alert("Game over", "You solved the board");
     }
@@ -100,7 +100,7 @@ public class Controller {
             case 3 :    model.initGame(SudokuLevel.HARD); break;
             default:    model.initGame();
         }
-        view.updateBoard();
+        view.updateBoard(model);
     }
 
     /**
@@ -126,7 +126,7 @@ public class Controller {
      */
     public void onClear() {
         model.resetMoves();
-        view.updateBoard();
+        view.updateBoard(model);
     }
 
     /**
@@ -160,7 +160,7 @@ public class Controller {
         try {
 
             model.loadBoard(deserializeFromFile(file));
-            view.updateBoard();
+            view.updateBoard(model);
             view.alert("Load", "Game loaded successfully!");
             System.out.println("Game loaded successfully!");
         } catch (IOException | ClassNotFoundException e) {

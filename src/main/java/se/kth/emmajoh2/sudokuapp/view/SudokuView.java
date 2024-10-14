@@ -1,6 +1,5 @@
 package se.kth.emmajoh2.sudokuapp.view;
 
-import javafx.animation.FillTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,10 +9,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.util.Duration;
 import se.kth.emmajoh2.sudokuapp.model.SudokuModel;
 
 import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.*;
@@ -29,9 +26,7 @@ import static se.kth.emmajoh2.sudokuapp.model.MatrixGenerator.*;
 public class  SudokuView extends BorderPane {
     private transient Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private transient GridPane numberPane;
-    private SudokuModel model;
     private transient MenuBar menuBar;
-    private final Controller controller;
     private transient Button check;
     private transient Button hint;
 
@@ -42,18 +37,11 @@ public class  SudokuView extends BorderPane {
      */
     public SudokuView(SudokuModel model) {
         super();
-        this.model = model;
-        controller = new Controller(model,this);
+        model = new SudokuModel();
+        Controller controller = new Controller(model,this);
         numberTiles = new Label[GRID_SIZE][GRID_SIZE];
-        initNumberTiles();
+        initNumberTiles(controller, model);
         numberPane = makeNumberPane();
-        initView();
-    }
-
-    /**
-     * The view initializes the grid of tiles, buttons, and menus, and connects them to the controller.
-     */
-    private void initView() {
         this.setPadding(new Insets(10));
 
         this.setCenter(numberPane);
@@ -72,6 +60,7 @@ public class  SudokuView extends BorderPane {
         addEventHandlers(controller);
         createMenuBar(controller);
     }
+
 
     /**
      * Creates a vertical box (VBox) containing a set of number buttons (1-9) and a clear button ('C').
@@ -145,7 +134,7 @@ public class  SudokuView extends BorderPane {
      * The font of each tile is adjusted depending on whether it is an initial tile (bold) or a user-input tile (normal).
      * </p>
      */
-    public void updateBoard() {
+    public void updateBoard(SudokuModel model) {
         Font font = Font.font("Monospaced", FontWeight.NORMAL, 20);
         Font boldFont = Font.font("Monospaced", FontWeight.BOLD, 20);
         for (int row = 0; row < GRID_SIZE; row++) {
@@ -167,19 +156,13 @@ public class  SudokuView extends BorderPane {
         }
     }
 
-
-    // use this method to get a reference to the number (called by some other class)
-    public GridPane getNumberPane() {
-        return numberPane;
-    }
-
     /**
      * Initializes the tiles displayed in the grid based on the current state of the model.
      * <p>
      * This method is called by the constructor to populate the UI with the appropriate labels for each tile.
      * called by constructor (only)
      */
-    private final void initNumberTiles() {
+    private final void initNumberTiles(Controller controller, SudokuModel model) {
         Font font = Font.font("Monospaced", FontWeight.NORMAL, 20);
         Font boldFont = Font.font("Monospaced", FontWeight.BOLD, 20);
         for (int row = 0; row < GRID_SIZE; row++) {
@@ -191,6 +174,26 @@ public class  SudokuView extends BorderPane {
                 else tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
+
+                /**
+                 * Handles click events for the tiles in the Sudoku grid.
+                 * <p>
+                 * When a tile is clicked, it passes the row, column, and the number selected to the controller.
+                 * </p>
+                 */
+                EventHandler<MouseEvent> tileClickHandler = new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        for (int row = 0; row < GRID_SIZE; row++) {
+                            for (int col = 0; col < GRID_SIZE; col++) {
+                                if (event.getSource() == numberTiles[row][col]) {
+                                    controller.onTileSelectedOrSomeSuch(row, col);
+                                }
+                            }
+                        }
+                    }
+                };
+
                 tile.setOnMouseClicked(tileClickHandler); // add your custom event handler
                 // add new tile to grid
                 numberTiles[row][col] = tile;
@@ -234,24 +237,7 @@ public class  SudokuView extends BorderPane {
     }
 
 
-    /**
-     * Handles click events for the tiles in the Sudoku grid.
-     * <p>
-     * When a tile is clicked, it passes the row, column, and the number selected to the controller.
-     * </p>
-     */
-    EventHandler<MouseEvent> tileClickHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            for (int row = 0; row < GRID_SIZE; row++) {
-                for (int col = 0; col < GRID_SIZE; col++) {
-                    if (event.getSource() == numberTiles[row][col]) {
-                        controller.onTileSelectedOrSomeSuch(row, col);
-                    }
-                }
-            }
-        }
-    };
+
 
     /**
      * Adds event handlers to the "Check" and "Hint" buttons.

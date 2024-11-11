@@ -11,8 +11,7 @@
 ### View
 - [X] Lägga till knappar och menyer till view.
 - [X] Handler till alla knappar och menyer.
-- [ ] Lägg in att det kommer upp en announcement när man startar spelet ifall man vill loada eller starta nytt spel?
-- [ ] Användaren ska få upp en ruta då man klickar exit, där man får välja om man vill avsluta eller spara&avsluta
+
 
 ### Controller
 - [X] Skapa onAction-metoder för handlers, i controller.

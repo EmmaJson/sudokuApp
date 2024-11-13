@@ -1,22 +1,11 @@
-# Todo
+# Sudoku App
 
-### Model
-- [X] Metoder för att generara en spelplan med tillhörande lösning.
-- [X] Lägg in en matris som håller koll på lösnings rutor som fanns där när matrsien genererades.
-- [X] En metod för att lägga in siffror i rutorna.
-- [X] En metod som kollar ifall de ifyllda rutorna är lösta.
-- [X] Datamedlem som representerar en tryckt knapp, samt en setmetod till denna.
+A classic **Sudoku game** implemented in Java with MVC-structure!
 
-
-### View
-- [X] Lägga till knappar och menyer till view.
-- [X] Handler till alla knappar och menyer.
-
-
-### Controller
-- [X] Skapa onAction-metoder för handlers, i controller.
-- [X] Läs in till fil.
-- [X] Spara i fil.
-
-### .jar
-- [X] Skapa en .jar.
+## Features
+- **Interactive User Interface**: Clean and responsive UI for solving Sudoku puzzles.
+- **Difficulty Levels**: Choose from easy, medium, or hard puzzles.
+- **Hint System**: Get hints to help you solve tricky puzzles.
+- **Validation**: Instant feedback if your solution is correct or if there are conflicts.
+- **Auto-Save & Load**: Resume from where you left off.
+- **Keyboard and Mouse Controls**: Supports intuitive controls for easy navigation.
